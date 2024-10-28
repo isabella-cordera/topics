@@ -2,10 +2,10 @@ import pandas as pd
 import numpy as np
 from math import atan2, degrees, sqrt
 
-class OrangutanBehaviorAnalyzer:
+class OrangutanBehavioranalyser:
     def __init__(self, csv_file):
         self.data = pd.read_csv(csv_file)
-        self.behaviors = ['sitting', 'walking', 'climbing']  # Removed 'swinging', renamed 'climbing'
+        self.behaviors = ['sitting', 'walking', 'climbing']
         
     def calculate_distance(self, x1, y1, x2, y2):
         """Calculate Euclidean distance between two points"""
@@ -41,8 +41,8 @@ class OrangutanBehaviorAnalyzer:
 
         return center_hip_x, center_hip_y
     
-    def analyze_sitting(self, row, prev_row=None):
-        """Analyze sitting behavior confidence"""
+    def analyse_sitting(self, row, prev_row=None):
+        """analyse sitting behavior confidence"""
         confidence = 0
         
         # Check if hips are relatively close to knees (sitting position)
@@ -84,8 +84,8 @@ class OrangutanBehaviorAnalyzer:
             
         return min(confidence, 100)
     
-    def analyze_climbing(self, row, prev_row=None):
-        """Analyze climbing behavior confidence (previously swinging)"""
+    def analyse_climbing(self, row, prev_row=None):
+        """analyse climbing behavior confidence (previously swinging)"""
         confidence = 0
         
         # Check arm extension and position
@@ -124,8 +124,8 @@ class OrangutanBehaviorAnalyzer:
             
         return min(confidence, 100)
     
-    def analyze_walking(self, row, prev_row=None):
-        """Analyze walking behavior confidence"""
+    def analyse_walking(self, row, prev_row=None):
+        """analyse walking behavior confidence"""
         confidence = 0
         
         # Check leg separation
@@ -146,30 +146,30 @@ class OrangutanBehaviorAnalyzer:
             
         return min(confidence, 100)
     
-    def analyze_frame(self, frame_idx):
-        """Analyze a single frame and return behavior confidences"""
+    def analyse_frame(self, frame_idx):
+        """analyse a single frame and return behavior confidences"""
         current_row = self.data.iloc[frame_idx]
         previous_row = self.data.iloc[frame_idx - 1] if frame_idx > 0 else None
         
         confidences = {
-            'sitting': self.analyze_sitting(current_row, previous_row),
-            'walking': self.analyze_walking(current_row, previous_row),
-            'climbing': self.analyze_climbing(current_row, previous_row)  # Renamed from swinging
+            'sitting': self.analyse_sitting(current_row, previous_row),
+            'walking': self.analyse_walking(current_row, previous_row),
+            'climbing': self.analyse_climbing(current_row, previous_row)  # Renamed from swinging
         }
         
-        # Normalize confidences to sum to 100%
+        # Normalise confidences to sum to 100%
         total = sum(confidences.values())
         if total > 0:
             confidences = {k: (v / total) * 100 for k, v in confidences.items()}
             
         return confidences
 
-    def analyze_all_frames(self, output_csv='BehaviorAnalysis.csv'):
-        """Analyze all frames, print results, and save to a CSV file"""
+    def analyse_all_frames(self, output_csv='BehaviorAnalysis.csv'):
+        """analyse all frames, print results, and save to a CSV file"""
         results = []  # List to store analysis results for saving to CSV
 
         for frame_idx in range(len(self.data)):
-            confidences = self.analyze_frame(frame_idx)
+            confidences = self.analyse_frame(frame_idx)
             
             # Determine majority behavior and its confidence
             majority_behavior, majority_confidence = max(confidences.items(), key=lambda x: x[1])
@@ -201,5 +201,5 @@ class OrangutanBehaviorAnalyzer:
         print(f"\nResults saved to {output_csv}")
 
 # Usage example
-analyzer = OrangutanBehaviorAnalyzer('ProcessedData.csv')
-analyzer.analyze_all_frames()
+analyser = OrangutanBehavioranalyser('ProcessedData.csv')
+analyser.analyse_all_frames()
