@@ -44,7 +44,7 @@ def add_behavior_overlay(video_path, csv_data, start_time=8.04, frame_interval=2
     frame_count = 0
     csv_index = 0
     
-    # Initialize current behavior and confidence
+    # Initialise current behavior and confidence
     current_behavior = "UNKNOWN"
     current_confidence = 100.0  # Changed to 100.0
     
