@@ -4,10 +4,10 @@ from sklearn.metrics import confusion_matrix, classification_report, accuracy_sc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-class BehaviorAccuracyAnalyzer:
+class BehaviorAccuracyAnalyser:
     def __init__(self, predicted_file, true_behavior_file):
         """
-        Initialize the analyzer with predicted and true behavior files
+        Initialise the analyser with predicted and true behavior files
         
         Args:
             predicted_file (str): Path to the CSV file with predicted behaviors
@@ -74,8 +74,8 @@ class BehaviorAccuracyAnalyzer:
         plt.savefig('confusion_matrix.png')
         plt.close()
         
-    def analyze_frame_by_frame(self, merged_data):
-        """Analyze and print frame-by-frame comparison"""
+    def analyse_frame_by_frame(self, merged_data):
+        """analyse and print frame-by-frame comparison"""
         mismatches = merged_data[merged_data['Classified Behavior'].str.lower() != 
                                merged_data['True_Behaviour'].str.lower()]
         
@@ -93,7 +93,7 @@ class BehaviorAccuracyAnalyzer:
         self.plot_confusion_matrix(conf_matrix)
         
         # Get mismatched frames
-        mismatches = self.analyze_frame_by_frame(merged_data)
+        mismatches = self.analyse_frame_by_frame(merged_data)
         
         # Save results to files
         report_df.to_csv('classification_report.csv')
@@ -122,5 +122,5 @@ class BehaviorAccuracyAnalyzer:
         return accuracy, report_df, conf_matrix, mismatches
 
 if __name__ == "__main__":
-    analyzer = BehaviorAccuracyAnalyzer('BehaviorAnalysis.csv', 'true_behaviour.csv')
-    analyzer.run_analysis()
+    analyser = BehaviorAccuracyanalyser('BehaviorAnalysis.csv', 'true_behaviour.csv')
+    analyser.run_analysis()
